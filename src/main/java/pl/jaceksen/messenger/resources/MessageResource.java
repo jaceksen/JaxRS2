@@ -16,6 +16,8 @@ import pl.jaceksen.messenger.model.Message;
 import pl.jaceksen.messenger.service.MessageService;
 
 @Path("/messages")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class MessageResource {
 	
 	MessageService messageService = new MessageService();
@@ -28,29 +30,23 @@ public class MessageResource {
 	
 	@GET
 	@Path("/test")
-	@Produces(MediaType.TEXT_PLAIN)
 	public String test(){
 		return "test";
 	}
 	
 	@GET
 	@Path("/{messageId}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Message getSingleMessage(@PathParam("messageId") long messageId){
 		return messageService.getMessage(messageId);
 	}
 	
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Message addMessage(Message  message){
 		return messageService.addMessage(message);
 	}
 	
 	@PUT
 	@Path("/{messageId}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Message updateMessage(@PathParam("messageId") long id, Message message){
 		message.setId(id);
 		return messageService.updateMessage(message);
@@ -58,7 +54,6 @@ public class MessageResource {
 	
 	@DELETE
 	@Path("/{messageId}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public void deleteMessage(@PathParam("messageId") long id){
 		messageService.removeMessage(id);
 	}
